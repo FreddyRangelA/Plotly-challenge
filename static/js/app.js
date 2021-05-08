@@ -30,19 +30,24 @@ function bargraph(id_input){
  
 };
 
-d3.selectAll("#selDataset").on("change", updateChart);
-function updateChart() {
+d3.json("samples.json").then((data) => {
+    var names = data.names;
+    console.log(names);
+    //names.forEach((name) => {
+    d3.select("#selDataset").selectAll("option").data(names)
+    .enter().append("option").property("value", d =>d).text(d=>d);
+      // });
+      
+     bargraph(data.names[0]);
+    
+});
+
+
+function optionChanged(value) {
+    console.log(value);
+    bargraph(value);
         
-    d3.json("samples.json").then((data) => {
-        var names = data.names;
-        console.log(data.names);
-        //names.forEach((name) => {
-        // d3.select("#selDataset").selectAll("option").data(names).enter().append("option").text(names).property("value", name);
-        //   });
-          
-        // bargraph(data.names[0]);
-        // });
-    });
+    
 };
 
 
