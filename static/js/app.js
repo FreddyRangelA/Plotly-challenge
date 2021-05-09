@@ -30,22 +30,36 @@ function bargraph(id_input){
  
 };
 
+function bubbleChart(id_input){
+
+};
+
+//adding values to the dropdown menue.
 d3.json("samples.json").then((data) => {
     var names = data.names;
     console.log(names);
     //names.forEach((name) => {
-    d3.select("#selDataset").selectAll("option").data(names)
+    var num=d3.select("#selDataset").selectAll("option").data(names)
     .enter().append("option").property("value", d =>d).text(d=>d);
+    console.log(num);
       // });
       
-     bargraph(data.names[0]);
+     //bargraph(data.names[0]);
     
 });
+//adding the data to sample-metadata.
+console.log(num);
+d3.select("#sample-metadata").selectAll("lu").append("lu");
+function table(id_input){
+    
 
+};
 
+//using the event lestner from the html file to select the value.
 function optionChanged(value) {
     console.log(value);
     bargraph(value);
+    bubbleChart(value);
         
     
 };
