@@ -37,29 +37,47 @@ function bubbleChart(id_input){
 //adding values to the dropdown menue.
 d3.json("samples.json").then((data) => {
     var names = data.names;
-    console.log(names);
+    //console.log(names);
     //names.forEach((name) => {
-    var num=d3.select("#selDataset").selectAll("option").data(names)
+    d3.select("#selDataset").selectAll("option").data(names)
     .enter().append("option").property("value", d =>d).text(d=>d);
-    console.log(num);
+    //console.log(num);
       // });
       
      //bargraph(data.names[0]);
     
 });
 //adding the data to sample-metadata.
-console.log(num);
-d3.select("#sample-metadata").selectAll("lu").append("lu");
+
+
 function table(id_input){
+    console.log(id_input);
+    
+
+    d3.json("samples.json").then((dataNum)=>{
+        var num=dataNum.metadata;
+        var dataIdNum = num.filter(d=> d.id == id_input);
+        var resultNum=dataIdNum[0];
+        console.log(resultNum);
+        Object.entries(resultNum).forEach(([key,value])=>{
+            d3.select(".panel-body").append("p").text(`${key}:${value}`);
+
+        });
+        
+        //console.log(id_input);
+    });
+
+    
     
 
 };
 
 //using the event lestner from the html file to select the value.
 function optionChanged(value) {
-    console.log(value);
+    //console.log(value);
     bargraph(value);
     bubbleChart(value);
+    table(value);
         
     
 };
