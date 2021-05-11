@@ -65,9 +65,9 @@ function bubbleChart(id_input){
         var data = [trace1];
         var layout={
             title:'bubble chart',
-            showlegend: true,
+            showlegend: false,
             hovermode: "closest",
-            height: otu_values_b,
+            height: 900,
             width: otu_ids_b,
             xaxis: {
                 title: "OTU Id"
