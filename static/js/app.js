@@ -32,6 +32,41 @@ function bargraph(id_input){
 
 function bubbleChart(id_input){
 
+    d3.json("samples.json").then((importDataB) =>{
+        //selecting the sample section from samples.js
+        var dataSamples=importDataB.samples;
+        //id_input coming from the dropdown menue
+        var dataId = dataSamples.filter(d=> d.id == id_input);
+        var otu_ids_b=dataId[0].otu_ids;
+        var otu_lables_b= dataId[0].otu_labels;
+        var otu_values_b = dataId[0].sample_values;
+
+        var trace1 ={
+            x:otu_ids_b,
+            y:otu_values_b,
+            text:otu_lables_b,
+            mode:'markers',
+            marker:{
+                size:otu_values_b,
+                color:otu_ids_b,
+                colorscale: "Earth"
+            }
+        };
+
+        var data = [trace1];
+        var layout={
+            title:'bubble chart',
+            showlegend: true,
+            hovermode: "closest",
+            xaxis: {
+                title: "OTU Id"
+            }
+        };
+
+        Plotly.newPlot("bubble",[data],layout);
+
+    });
+
 };
 
 //adding values to the dropdown menue.
@@ -51,16 +86,19 @@ d3.json("samples.json").then((data) => {
 
 
 function table(id_input){
-    console.log(id_input);
+    //console.log(id_input);
     
-
+    
     d3.json("samples.json").then((dataNum)=>{
         var num=dataNum.metadata;
         var dataIdNum = num.filter(d=> d.id == id_input);
         var resultNum=dataIdNum[0];
-        console.log(resultNum);
+        panelBody=d3.select(".panel-body");
+        panelBody.html("");
         Object.entries(resultNum).forEach(([key,value])=>{
+            
             d3.select(".panel-body").append("p").text(`${key}:${value}`);
+            
 
         });
         
@@ -71,6 +109,7 @@ function table(id_input){
     
 
 };
+
 
 //using the event lestner from the html file to select the value.
 function optionChanged(value) {
