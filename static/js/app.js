@@ -30,42 +30,54 @@ function bargraph(id_input){
  
 };
 
+
+d3.json("samples.json").then((importDataB) =>{
+    //selecting the sample section from samples.js
+    var dataSamples=importDataB.samples;
+    //console.log(dataSamples);
+    //id_input coming from the dropdown menue
+    var dataId = dataSamples.filter(d=> d.id == 940);
+    //console.log(dataId);
+    var otu_ids_b=dataId[0].otu_ids;
+    //console.log(otu_ids_b);
+    var otu_lables_b= dataId[0].otu_labels;
+    //console.log(otu_lables_b);
+    var otu_values_b = dataId[0].sample_values;
+    //console.log(otu_values_b);
+
+    var trace1 ={
+        x:otu_ids_b,
+        y:otu_values_b,
+        //text:otu_lables_b,
+        // mode:'markers',
+        // marker:{
+        //     size:otu_values_b,
+        //     sizemode:'area',
+        //     color:otu_ids_b,
+        //     colorscale: "Earth"
+        // }
+    };
+
+    var data = [trace1];
+    var layout={
+        title:'bubble chart',
+        showlegend: true,
+        hovermode: "closest",
+        height: 600,
+        width: otu_values_b,
+        xaxis: {
+            title: "OTU Id"
+        }
+    };
+
+    Plotly.newPlot("bubble",[data],layout);
+
+});
+
+
 function bubbleChart(id_input){
 
-    d3.json("samples.json").then((importDataB) =>{
-        //selecting the sample section from samples.js
-        var dataSamples=importDataB.samples;
-        //id_input coming from the dropdown menue
-        var dataId = dataSamples.filter(d=> d.id == id_input);
-        var otu_ids_b=dataId[0].otu_ids;
-        var otu_lables_b= dataId[0].otu_labels;
-        var otu_values_b = dataId[0].sample_values;
-
-        var trace1 ={
-            x:otu_ids_b,
-            y:otu_values_b,
-            text:otu_lables_b,
-            mode:'markers',
-            marker:{
-                size:otu_values_b,
-                color:otu_ids_b,
-                colorscale: "Earth"
-            }
-        };
-
-        var data = [trace1];
-        var layout={
-            title:'bubble chart',
-            showlegend: true,
-            hovermode: "closest",
-            xaxis: {
-                title: "OTU Id"
-            }
-        };
-
-        Plotly.newPlot("bubble",[data],layout);
-
-    });
+    
 
 };
 
