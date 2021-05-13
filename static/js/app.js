@@ -78,6 +78,24 @@ function bubbleChart(id_input){
     
     });
 
+    function gauge(id_input){
+        d3.json("samples.json").then((importDatagauge) =>{
+            //selecting the sample section from samples.js
+            var dataSamples=importDatagauge.metadata;
+            console.log(dataSamples);
+            //id_input coming from the dropdown menue
+            var dataId = dataSamples.filter(d=> d.id == id_input);
+            console.log(dataId[0]);
+            // var otu_ids_b=dataId[0].otu_ids;
+            // //console.log(otu_ids_b);
+            // var otu_lables_b= dataId[0].otu_labels;
+            // //console.log(otu_lables_b);
+            // var otu_values_b = dataId[0].sample_values;
+            // //console.log(otu_values_b);
+        });
+
+    }
+
     
 
 };
