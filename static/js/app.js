@@ -22,7 +22,7 @@ function bargraph(id_input){
             orientation: "h"
         };
         var layout = {
-            title: "Top 10 Bacteria Cultures Found"
+            title: "Top 10 Bacteria Cultures Found",
         };
         var data = [trace];
         Plotly.newPlot("bar", data, layout);
@@ -78,27 +78,60 @@ function bubbleChart(id_input){
     
     });
 
-    function gauge(id_input){
-        d3.json("samples.json").then((importDatagauge) =>{
-            //selecting the sample section from samples.js
-            var dataSamples=importDatagauge.metadata;
-            console.log(dataSamples);
-            //id_input coming from the dropdown menue
-            var dataId = dataSamples.filter(d=> d.id == id_input);
-            console.log(dataId[0]);
-            // var otu_ids_b=dataId[0].otu_ids;
-            // //console.log(otu_ids_b);
-            // var otu_lables_b= dataId[0].otu_labels;
-            // //console.log(otu_lables_b);
-            // var otu_values_b = dataId[0].sample_values;
-            // //console.log(otu_values_b);
-        });
-
-    }
+    
 
     
 
 };
+
+function gauge(id_input){
+    d3.json("samples.json").then((importDatagauge) =>{
+        //selecting the sample section from samples.js
+        var dataSamples=importDatagauge.metadata;
+        console.log(dataSamples);
+        //id_input coming from the dropdown menue
+        var dataId = dataSamples.filter(d=> d.id == id_input);
+        var dataGauge=dataId[0].wfreq;
+        console.log(dataGauge);
+        var data=[
+            {
+                domain:{x:[0,1], y:[0,1]},
+                value: dataGauge,
+                title:{text:`Scrubs per Week`},
+                    
+                
+                type: "indicator",
+                mode:"gauge+number+delta",
+                delta: { reference: 9 },
+                gauge:{
+                    axis:{range:[null,9]},
+                    threshold:{
+                        line:{color:"purple",width:8},
+                        thickness:2,
+                        steps: [
+                            { range: [7,9], color: "cyan" }
+                        ],
+
+                        value: dataGauge
+                    }
+                }
+            }
+        ];
+        var layout={width:600, height:500, margin: { t: 0, b: 0 }};
+
+        Plotly.newPlot('gauge',data,layout);
+        // var otu_ids_b=dataId[0].otu_ids;
+        // //console.log(otu_ids_b);
+        // var otu_lables_b= dataId[0].otu_labels;
+        // //console.log(otu_lables_b);
+        // var otu_values_b = dataId[0].sample_values;
+        // //console.log(otu_values_b);
+
+
+    });
+
+};
+
 
 //adding values to the dropdown menue.
 d3.json("samples.json").then((data) => {
@@ -148,6 +181,7 @@ function optionChanged(value) {
     bargraph(value);
     bubbleChart(value);
     table(value);
+    gauge(value);
         
     
 };
