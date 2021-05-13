@@ -22,7 +22,7 @@ function bargraph(id_input){
             orientation: "h"
         };
         var layout = {
-            title: "Bacteria"
+            title: "Top 10 Bacteria Cultures Found"
         };
         var data = [trace];
         Plotly.newPlot("bar", data, layout);
@@ -64,7 +64,7 @@ function bubbleChart(id_input){
     
         var data = [trace1];
         var layout={
-            title:'bubble chart',
+            title:'Bacteria Cultures Per Sample',
             showlegend: false,
             hovermode: "closest",
             height: 900,
